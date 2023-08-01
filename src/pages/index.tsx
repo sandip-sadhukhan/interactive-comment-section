@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Comment from "../components/comment";
+import data from "../../data/data.json";
 
 export default function Home() {
   return (
@@ -23,10 +24,20 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Box as="main" w="full" minH="100vh" pt={10} bg="veryLightGray.500">
+      <Box as="main" w="full" minH="100vh" py={10} bg="veryLightGray.500">
         <Container maxW="container.md">
-          <VStack>
-            <Comment />
+          <VStack rowGap={6}>
+            {data.comments.map((comment) => (
+              <Comment
+                key={comment.id}
+                id={comment.id}
+                content={comment.content}
+                createdAt={comment.createdAt}
+                score={comment.score}
+                user={comment.user}
+                replies={comment.replies}
+              />
+            ))}
           </VStack>
         </Container>
       </Box>

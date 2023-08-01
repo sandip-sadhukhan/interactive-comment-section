@@ -3,9 +3,10 @@ import { Button, Image, VStack } from "@chakra-ui/react";
 interface Props {
   hidden?: boolean;
   horizontal?: boolean;
+  score: number;
 }
 
-const VoteActions = ({ hidden = false, horizontal = false }: Props) => {
+const VoteActions = ({ hidden = false, horizontal = false, score }: Props) => {
   return (
     <VStack
       gap={0}
@@ -31,7 +32,7 @@ const VoteActions = ({ hidden = false, horizontal = false }: Props) => {
         bg="veryLightGray.500"
         color="moderateBlue.500"
       >
-        12
+        {score}
       </Button>
       <Button
         size="sm"
