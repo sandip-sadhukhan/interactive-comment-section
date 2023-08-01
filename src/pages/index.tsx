@@ -12,6 +12,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import Head from "next/head";
+import Comment from "../components/comment";
 
 export default function Home() {
   return (
@@ -25,70 +26,7 @@ export default function Home() {
       <Box as="main" w="full" minH="100vh" pt={10} bg="veryLightGray.500">
         <Container maxW="container.md">
           <VStack>
-            <Card bg="white" p={2} borderRadius="lg">
-              <CardBody>
-                <HStack columnGap={6} align="start">
-                  <VStack gap={0} mt={1}>
-                    <Button
-                      size="sm"
-                      w="full"
-                      borderRadius="none"
-                      borderTopRadius="lg"
-                      bg="veryLightGray.500"
-                    >
-                      <Image src="/images/icons/icon-plus.svg" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      w="full"
-                      borderRadius="none"
-                      bg="veryLightGray.500"
-                      color="moderateBlue.500"
-                    >
-                      12
-                    </Button>
-                    <Button
-                      size="sm"
-                      w="full"
-                      borderRadius="none"
-                      borderBottomRadius="lg"
-                      bg="veryLightGray.500"
-                    >
-                      <Image src="/images/icons/icon-minus.svg" />
-                    </Button>
-                  </VStack>
-                  <VStack>
-                    <HStack w="full" justifyContent="space-between">
-                      <HStack columnGap={4}>
-                        <Avatar
-                          size="sm"
-                          src="/images/avatars/image-amyrobson.png"
-                        />
-                        <Heading
-                          as="h3"
-                          size="sm"
-                          fontWeight="semibold"
-                          color="darkBlue.500"
-                        >
-                          amyrobson
-                        </Heading>
-                        <Text color="grayishBlue.500">1 month ago</Text>
-                      </HStack>
-                      <Button variant="ghost" color="moderateBlue.500">
-                        <Image src="/images/icons/icon-reply.svg" mr={2} />
-                        <Text>Reply</Text>
-                      </Button>
-                    </HStack>
-                    <Text color="grayishBlue.500">
-                      Impressive! Though it seems the drag feature could be
-                      improved. But overall it looks incredible. You've nailed
-                      the design and the responsiveness at various breakpoints
-                      works really well.
-                    </Text>
-                  </VStack>
-                </HStack>
-              </CardBody>
-            </Card>
+            <Comment />
           </VStack>
         </Container>
       </Box>
