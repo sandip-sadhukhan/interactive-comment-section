@@ -4,8 +4,8 @@ interface Props {
   hidden?: boolean;
   horizontal?: boolean;
   score: number;
-  voteId: number;
-  upOrDownVote: (voteId: number, count: number) => void;
+  commentId: number;
+  upOrDownVote: (commentId: number, count: number) => void;
 }
 
 const VoteActions = ({
@@ -13,7 +13,7 @@ const VoteActions = ({
   horizontal = false,
   score,
   upOrDownVote,
-  voteId,
+  commentId,
 }: Props) => {
   return (
     <VStack
@@ -30,7 +30,7 @@ const VoteActions = ({
         borderBottomLeftRadius={horizontal ? "lg" : "none"}
         borderBottomRightRadius="none"
         bg="veryLightGray.500"
-        onClick={() => upOrDownVote(voteId, 1)}
+        onClick={() => upOrDownVote(commentId, 1)}
       >
         <Image src="/images/icons/icon-plus.svg" />
       </Button>
@@ -51,7 +51,7 @@ const VoteActions = ({
         borderBottomLeftRadius={horizontal ? "none" : "lg"}
         borderBottomRightRadius="lg"
         bg="veryLightGray.500"
-        onClick={() => upOrDownVote(voteId, -1)}
+        onClick={() => upOrDownVote(commentId, -1)}
       >
         <Image src="/images/icons/icon-minus.svg" />
       </Button>

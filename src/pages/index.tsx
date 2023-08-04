@@ -13,16 +13,20 @@ import {
 import Head from "next/head";
 import Comment from "../components/comment";
 import data from "../../data/data.json";
-import { getCurrentUser, getInitialComments } from "../../helpers";
-import { useState } from "react";
+import { getCurrentUser, getInitialComments, saveData } from "../../helpers";
+import { useState, useEffect } from "react";
 import { CommentType } from "../../types";
 
 export default function Home() {
   const isMobileDevice = useBreakpointValue({ base: true, md: false });
-  const initialComments = getInitialComments();
-  const [comments, setComments] = useState<CommentType[]>(initialComments);
+  const [comments, setComments] = useState<CommentType[]>([]);
   const currentUser = getCurrentUser();
   const [newCommentContent, setNewCommentContent] = useState<string>("");
+
+  useEffect(() => {
+    const initialComments = getInitialComments();
+    setComments(initialComments);
+  }, []);
 
   const addComment = () => {
     if (!newCommentContent || !newCommentContent.trim()) {
@@ -42,18 +46,34 @@ export default function Home() {
 
     setComments(newComments);
     setNewCommentContent("");
+    saveData(newComments);
+  };
+
+  const deleteComment = (commentId: number) => {
+    var newComments = [...comments];
+
+    newComments = newComments.filter((comment) => comment.id !== commentId);
+    newComments = newComments.map((comment) => {
+      comment.replies = comment.replies?.filter(
+        (reply) => reply.id !== commentId
+      );
+      return comment;
+    });
+
+    setComments(newComments);
+    saveData(newComments);
   };
 
   // count will be either +1 or -1
-  const upOrDownVote = (voteId: number, count: number) => {
+  const upOrDownVote = (commentId: number, count: number) => {
     var newComments = [...comments];
 
     newComments.forEach(function (vote) {
-      if (vote.id === voteId) {
+      if (vote.id === commentId) {
         vote.score = Math.max(vote.score + count, 0);
       } else {
         vote.replies?.forEach(function (reply) {
-          if (reply.id === voteId) {
+          if (reply.id === commentId) {
             reply.score = Math.max(reply.score + count, 0);
           }
         });
@@ -61,6 +81,7 @@ export default function Home() {
     });
 
     setComments(newComments);
+    saveData(newComments);
   };
 
   return (
@@ -84,6 +105,7 @@ export default function Home() {
                 user={comment.user}
                 replies={comment.replies}
                 upOrDownVote={upOrDownVote}
+                deleteComment={deleteComment}
               />
             ))}
 

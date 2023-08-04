@@ -17,7 +17,8 @@ import { getCurrentUser } from "../../helpers";
 import { CommentType } from "../../types";
 
 interface Props extends CommentType {
-  upOrDownVote: (voteId: number, count: number) => void;
+  upOrDownVote: (commentId: number, count: number) => void;
+  deleteComment: (commentId: number) => void;
 }
 
 const Comment = (props: Props) => {
@@ -30,6 +31,7 @@ const Comment = (props: Props) => {
     replies = [],
     replyingTo,
     upOrDownVote,
+    deleteComment,
   } = props;
   const isMobileDevice = useBreakpointValue({ base: true, md: false });
   const replyToLeftMargin = useBreakpointValue({ base: 5, md: 11 });
@@ -48,7 +50,7 @@ const Comment = (props: Props) => {
         <CardBody>
           <HStack columnGap={6} align="start" w="full">
             <VoteActions
-              voteId={id}
+              commentId={id}
               upOrDownVote={upOrDownVote}
               hidden={isMobileDevice}
               score={score}
@@ -84,7 +86,12 @@ const Comment = (props: Props) => {
                     {createdAt}
                   </Text>
                 </HStack>
-                <CommentActions hidden={isMobileDevice} />
+                <CommentActions
+                  hidden={isMobileDevice}
+                  isCurrentUser={currentUser.username == user.username}
+                  deleteComment={deleteComment}
+                  commentId={id}
+                />
               </HStack>
 
               <Text color="grayishBlue.500" w="full">
@@ -105,10 +112,14 @@ const Comment = (props: Props) => {
                 <VoteActions
                   horizontal={true}
                   score={score}
-                  voteId={id}
+                  commentId={id}
                   upOrDownVote={upOrDownVote}
                 />
-                <CommentActions />
+                <CommentActions
+                  isCurrentUser={currentUser.username == user.username}
+                  deleteComment={deleteComment}
+                  commentId={id}
+                />
               </HStack>
             </VStack>
           </HStack>
@@ -137,6 +148,7 @@ const Comment = (props: Props) => {
                 user={replyComment.user}
                 replyingTo={replyComment.replyingTo}
                 upOrDownVote={upOrDownVote}
+                deleteComment={deleteComment}
               />
             ))}
           </VStack>
