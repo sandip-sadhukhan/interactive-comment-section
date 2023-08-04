@@ -44,7 +44,24 @@ export default function Home() {
     setNewCommentContent("");
   };
 
-  const upOrDownVote = () => {};
+  // count will be either +1 or -1
+  const upOrDownVote = (voteId: number, count: number) => {
+    var newComments = [...comments];
+
+    newComments.forEach(function (vote) {
+      if (vote.id === voteId) {
+        vote.score = Math.max(vote.score + count, 0);
+      } else {
+        vote.replies?.forEach(function (reply) {
+          if (reply.id === voteId) {
+            reply.score = Math.max(reply.score + count, 0);
+          }
+        });
+      }
+    });
+
+    setComments(newComments);
+  };
 
   return (
     <>
@@ -66,6 +83,7 @@ export default function Home() {
                 score={comment.score}
                 user={comment.user}
                 replies={comment.replies}
+                upOrDownVote={upOrDownVote}
               />
             ))}
 

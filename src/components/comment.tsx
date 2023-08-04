@@ -16,8 +16,21 @@ import React from "react";
 import { getCurrentUser } from "../../helpers";
 import { CommentType } from "../../types";
 
-const Comment = (props: CommentType) => {
-  const { content, createdAt, score, user, replies = [], replyingTo } = props;
+interface Props extends CommentType {
+  upOrDownVote: (voteId: number, count: number) => void;
+}
+
+const Comment = (props: Props) => {
+  const {
+    id,
+    content,
+    createdAt,
+    score,
+    user,
+    replies = [],
+    replyingTo,
+    upOrDownVote,
+  } = props;
   const isMobileDevice = useBreakpointValue({ base: true, md: false });
   const replyToLeftMargin = useBreakpointValue({ base: 5, md: 11 });
   const replyToDividerLeftMargin = useBreakpointValue({ base: 0, md: 10 });
@@ -34,7 +47,12 @@ const Comment = (props: CommentType) => {
       >
         <CardBody>
           <HStack columnGap={6} align="start" w="full">
-            <VoteActions hidden={isMobileDevice} score={score} />
+            <VoteActions
+              voteId={id}
+              upOrDownVote={upOrDownVote}
+              hidden={isMobileDevice}
+              score={score}
+            />
 
             <VStack w="full">
               <HStack w="full" justifyContent="space-between">
@@ -84,7 +102,12 @@ const Comment = (props: CommentType) => {
               </Text>
 
               <HStack w="full" justify="space-between" hidden={!isMobileDevice}>
-                <VoteActions horizontal={true} score={score} />
+                <VoteActions
+                  horizontal={true}
+                  score={score}
+                  voteId={id}
+                  upOrDownVote={upOrDownVote}
+                />
                 <CommentActions />
               </HStack>
             </VStack>
@@ -113,6 +136,7 @@ const Comment = (props: CommentType) => {
                 score={replyComment.score}
                 user={replyComment.user}
                 replyingTo={replyComment.replyingTo}
+                upOrDownVote={upOrDownVote}
               />
             ))}
           </VStack>
