@@ -8,62 +8,80 @@ import {
   Heading,
   useBreakpointValue,
   Box,
+  Tag,
 } from "@chakra-ui/react";
 import VoteActions from "./vote-actions";
 import CommentActions from "./comment-actions";
 import React from "react";
-
-interface CommentType {
-  id: number;
-  content: string;
-  createdAt: string;
-  score: number;
-  user: {
-    image: {
-      png: string;
-    };
-    username: string;
-  };
-  replyingTo?: string;
-  replies?: CommentType[];
-}
+import { getCurrentUser } from "../../helpers";
+import { CommentType } from "../../types";
 
 const Comment = (props: CommentType) => {
   const { content, createdAt, score, user, replies = [], replyingTo } = props;
   const isMobileDevice = useBreakpointValue({ base: true, md: false });
-  const replyToLeftMargin = useBreakpointValue({ base: 5, md: 20 });
+  const replyToLeftMargin = useBreakpointValue({ base: 5, md: 11 });
   const replyToDividerLeftMargin = useBreakpointValue({ base: 0, md: 10 });
+  const currentUser = getCurrentUser();
 
   return (
-    <VStack gap={0}>
+    <VStack gap={0} w="full">
       <Card
         bg="white"
         p={{ base: 0, md: 2 }}
         borderRadius="lg"
-        ml={replyingTo ? replyToLeftMargin : 0}
+        ml={`${replyingTo ? replyToLeftMargin : 0}%`}
+        w={`${100 - (replyingTo ? replyToLeftMargin : 0)}%`}
       >
         <CardBody>
-          <HStack columnGap={6} align="start">
+          <HStack columnGap={6} align="start" w="full">
             <VoteActions hidden={isMobileDevice} score={score} />
 
-            <VStack>
+            <VStack w="full">
               <HStack w="full" justifyContent="space-between">
                 <HStack columnGap={4}>
                   <Avatar size="sm" src={user.image.png} />
-                  <Heading
-                    as="h3"
-                    size="sm"
-                    fontWeight="semibold"
-                    color="darkBlue.500"
+                  <HStack>
+                    <Heading
+                      as="h3"
+                      size="sm"
+                      fontWeight="semibold"
+                      color="darkBlue.500"
+                    >
+                      {user.username}
+                    </Heading>
+                    <Tag
+                      size="sm"
+                      bg="moderateBlue.500"
+                      color="white"
+                      borderRadius="sm"
+                      hidden={currentUser.username !== user.username}
+                    >
+                      You
+                    </Tag>
+                  </HStack>
+                  <Text
+                    color="grayishBlue.500"
+                    fontSize={{ base: "sm", md: "md" }}
                   >
-                    {user.username}
-                  </Heading>
-                  <Text color="grayishBlue.500">{createdAt}</Text>
+                    {createdAt}
+                  </Text>
                 </HStack>
                 <CommentActions hidden={isMobileDevice} />
               </HStack>
 
-              <Text color="grayishBlue.500">{content}</Text>
+              <Text color="grayishBlue.500" w="full">
+                {replyingTo ? (
+                  <Text
+                    as="span"
+                    color="moderateBlue.500"
+                    mr={1}
+                    fontWeight="semibold"
+                  >
+                    @{replyingTo}
+                  </Text>
+                ) : null}
+                {content}
+              </Text>
 
               <HStack w="full" justify="space-between" hidden={!isMobileDevice}>
                 <VoteActions horizontal={true} score={score} />
