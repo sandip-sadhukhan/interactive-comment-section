@@ -22,7 +22,7 @@ const CommentActions = ({
         hidden={isCurrentUser}
         px={2}
       >
-        <Image src="/images/icons/icon-reply.svg" mr={2} />
+        <Image src="/images/icons/icon-reply.svg" mr={2} alt="Reply icon" />
         <Text>Reply</Text>
       </Button>
 
@@ -34,7 +34,7 @@ const CommentActions = ({
         px={2}
         onClick={() => deleteComment(commentId)}
       >
-        <Image src="/images/icons/icon-delete.svg" mr={2} />
+        <Image src="/images/icons/icon-delete.svg" mr={2} alt="delete icon" />
         <Text>Delete</Text>
       </Button>
 
@@ -45,7 +45,7 @@ const CommentActions = ({
         hidden={!isCurrentUser}
         px={2}
       >
-        <Image src="/images/icons/icon-edit.svg" mr={2} />
+        <Image src="/images/icons/icon-edit.svg" mr={2} alt="reply icon" />
         <Text>Edit</Text>
       </Button>
     </HStack>

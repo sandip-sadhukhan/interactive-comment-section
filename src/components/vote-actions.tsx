@@ -32,7 +32,7 @@ const VoteActions = ({
         bg="veryLightGray.500"
         onClick={() => upOrDownVote(commentId, 1)}
       >
-        <Image src="/images/icons/icon-plus.svg" />
+        <Image src="/images/icons/icon-plus.svg" alt="upvote icon" />
       </Button>
       <Button
         size="sm"
@@ -53,7 +53,7 @@ const VoteActions = ({
         bg="veryLightGray.500"
         onClick={() => upOrDownVote(commentId, -1)}
       >
-        <Image src="/images/icons/icon-minus.svg" />
+        <Image src="/images/icons/icon-minus.svg" alt="downvote icon" />
       </Button>
     </VStack>
   );
