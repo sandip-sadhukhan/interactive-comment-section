@@ -45,7 +45,7 @@ const CommentActions = ({
         hidden={!isCurrentUser}
         px={2}
       >
-        <Image src="/images/icons/icon-edit.svg" mr={2} alt="reply icon" />
+        <Image src="/images/icons/icon-edit.svg" mr={2} alt="edit icon" />
         <Text>Edit</Text>
       </Button>
     </HStack>

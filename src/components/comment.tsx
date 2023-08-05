@@ -37,11 +37,7 @@ const Comment = (props: Props) => {
   const replyToLeftMargin = useBreakpointValue({ base: 5, md: 11 });
   const replyToDividerLeftMargin = useBreakpointValue({ base: 0, md: 10 });
   const currentUser = getCurrentUser();
-
-  const cardWidth = () => {
-    const width = (replyingTo ? replyToLeftMargin : 0) as number;
-    return `${width}%`;
-  };
+  const cardMarginLeft = (replyingTo ? replyToLeftMargin : 0) as number;
 
   return (
     <VStack gap={0} w="full">
@@ -49,8 +45,8 @@ const Comment = (props: Props) => {
         bg="white"
         p={{ base: 0, md: 2 }}
         borderRadius="lg"
-        ml={`${replyingTo ? replyToLeftMargin : 0}%`}
-        w={cardWidth()}
+        ml={`${cardMarginLeft}%`}
+        w={`${100 - cardMarginLeft}%`}
       >
         <CardBody>
           <HStack columnGap={6} align="start" w="full">
